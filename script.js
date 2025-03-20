@@ -1,37 +1,37 @@
 document.addEventListener("DOMContentLoaded", function() { 
-    const form = document.getElementById("signup-form"); // Fixed the incorrect 'form' ID
-    const emailErrorMessage = document.getElementById("error-message");
-    const successState = document.getElementById("success-state");
-    const emailHolder = document.getElementById("email");
-    const userEmail = document.querySelector(".user-email");
-    const dismissBtn = document.querySelector(".close-btn");
-    const subscribeBtn = document.querySelector(".signup-btn");
+    const signUpForm = document.getElementById("signup-form"); 
+    const errorMessage = document.getElementById("error-message");
+    const successMessage = document.getElementById("success-state");
+    const emailInput = document.getElementById("email");
+    const userEmailDisplay = document.querySelector(".user-email");
+    const dismissButton = document.querySelector(".close-btn");
+    const subscribeButton = document.querySelector(".signup-btn");
 
     function validateEmail(email) {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     }
 
-    subscribeBtn.addEventListener("click", function(event) {
+    subscribeButton.addEventListener("click", function(event) {
         event.preventDefault(); 
-        const email = emailHolder.value.trim();
+        const email = emailInput.value.trim();
 
         if (validateEmail(email)) {
-            userEmail.innerText = email;
-            form.classList.add("hidden");
-            successState.classList.remove("hidden");
-            emailHolder.style.border = "1px solid #ddd"; 
-            emailErrorMessage.innerText = "";
+            userEmailDisplay.innerText = email;
+            signUpForm.classList.add("hidden");
+            successMessage.classList.remove("hidden");
+            emailInput.style.border = "1px solid #ddd"; 
+            errorMessage.innerText = "";
         } else {
-            emailErrorMessage.innerText = "Valid email required";
-            emailHolder.style.border = "1px solid hsl(4, 100%, 67%)"; 
+            errorMessage.innerText = "Valid email required";
+            emailInput.style.border = "1px solid hsl(4, 100%, 67%)"; 
         }
     });
 
-    dismissBtn.addEventListener("click", function() {
-        successState.classList.add("hidden");
-        form.classList.remove("hidden");
-        emailHolder.value = "";
-        emailErrorMessage.innerText = "";
-        emailHolder.style.border = "1px solid #ddd"; 
+    dismissButton.addEventListener("click", function() {
+        successMessage.classList.add("hidden");
+        signUpForm.classList.remove("hidden");
+        emailInput.value = "";
+        errorMessage.innerText = "";
+        emailInput.style.border = "1px solid #ddd"; 
     });
 });
