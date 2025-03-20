@@ -1,56 +1,37 @@
-const form = document.getElementById('form');
-const emailErrorMessage = document.getElementById('error-message');
-const successState = document.getElementById('success-state');
-const emailHolder = document.getElementById('email');
-const userEmail = document.querySelector('.user-email');
-const dismissBtn = document.querySelector('.close-btn')
+document.addEventListener("DOMContentLoaded", function() { 
+    const form = document.getElementById("signup-form"); // Fixed the incorrect 'form' ID
+    const emailErrorMessage = document.getElementById("error-message");
+    const successState = document.getElementById("success-state");
+    const emailHolder = document.getElementById("email");
+    const userEmail = document.querySelector(".user-email");
+    const dismissBtn = document.querySelector(".close-btn");
+    const subscribeBtn = document.querySelector(".signup-btn");
 
-function validateEmail(email) {
-    if (!email) {
-      return 'Email is required';
+    function validateEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     }
 
-    const isValidEmail = /^\S+@\S+$/g
-    if (!isValidEmail.test(email.trim())) {
-      return 'Please enter a valid email';
-    }
-   
-  }
+    subscribeBtn.addEventListener("click", function(event) {
+        event.preventDefault(); 
+        const email = emailHolder.value.trim();
 
+        if (validateEmail(email)) {
+            userEmail.innerText = email;
+            form.classList.add("hidden");
+            successState.classList.remove("hidden");
+            emailHolder.style.border = "1px solid #ddd"; 
+            emailErrorMessage.innerText = "";
+        } else {
+            emailErrorMessage.innerText = "Valid email required";
+            emailHolder.style.border = "1px solid hsl(4, 100%, 67%)"; 
+        }
+    });
 
-const handleSubmit = function(e) {
-    e.preventDefault();
-    
-    const formData = new FormData(e.target);
-    const email = formData.get('email');
-    
-    const emailError = validateEmail(email);
-    console.log("Form submitted with email:", email);
-    
-    if(emailError) {
-      emailErrorMessage.innerText = emailError;
-      emailHolder.style.border = "1px solid hsl(4, 100%, 67%)";
-      emailHolder.style.color = "hsl(4, 100%, 67%)";
-      emailHolder.style.backgroundColor = "hsl(4, 100%, 90%)";
-      
-    }
-    else {
-      emailErrorMessage.innerText = '';
-      form.classList.add('hidden');
-      successState.classList.remove('hidden');
-      userEmail.textContent = email;
-      userEmail.style.fontWeight = "bold";
-    }
-
-};
-
-form.addEventListener('submit', handleSubmit);
-
-dismissBtn.addEventListener('click', function() {
-  successState.classList.add('hidden');
-  form.classList.remove('hidden');
-  emailHolder.value = '';
-  emailHolder.style.backgroundColor = "hsl(0, 0%, 100%)";
-  emailHolder.style.border = "1px solid hsl(0, 0%,58%)";
-
+    dismissBtn.addEventListener("click", function() {
+        successState.classList.add("hidden");
+        form.classList.remove("hidden");
+        emailHolder.value = "";
+        emailErrorMessage.innerText = "";
+        emailHolder.style.border = "1px solid #ddd"; 
+    });
 });
