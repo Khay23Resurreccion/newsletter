@@ -11,11 +11,12 @@ function validateEmail(email) {
     }
 
     const isValidEmail = /^\S+@\S+$/g
-    if (email.trim() && !isValidEmail.test(email)) {
+    if (!isValidEmail.test(email.trim())) {
       return 'Please enter a valid email';
     }
    
   }
+
 
 const handleSubmit = function(e) {
     e.preventDefault();
@@ -24,6 +25,7 @@ const handleSubmit = function(e) {
     const email = formData.get('email');
     
     const emailError = validateEmail(email);
+    console.log("Form submitted with email:", email);
     
     if(emailError) {
       emailErrorMessage.innerText = emailError;
